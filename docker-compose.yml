@@ -1,0 +1,33 @@
+version: "3"
+services:
+
+  db:
+    image: postgres:11-alpine
+    env_file:
+      - .env                                # added file to .gitignore
+    environment:
+      POSTGRES_DB: ${DB_NAME}               # using env variables for database credentials
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    logging:
+      driver: "none"
+    restart: unless-stopped
+    volumes:
+      - ./db-data:/var/lib/postgresql/data  # db-data folder as presistent storage of database. added to .gitignore
+
+  wiki:
+    image: requarks/wiki:2.5                # Using latest stable docker image of wiki.js until i make any changes to source myself
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USERNAME}
+      DB_PASS: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    restart: unless-stopped
+    ports:
+      - "8081:3000"                         # Mapping the wikis default port to servers port 8081
