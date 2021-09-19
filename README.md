@@ -1,3 +1,8 @@
+# Implementation of wiki.js on [TB38.no](https://tb38.no) as an internal wiki used at work.
+Hosted on digital ocean with docker-compose. 
+It is currently set up with a postgres database and the wiki.js source code.
+For now just utelizing the latest stable docker image of wiki.js, but I'm considering minor changes to the source code.
+
 <div align="center">
 
 <img src="https://static.requarks.io/logo/wikijs-full.svg" alt="Wiki.js" width="600" />
